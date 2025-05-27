@@ -2,15 +2,16 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from .especialidade_medica import EspecialidadeMedica
 
+
 class Medico(models.Model):
 
     nome = models.CharField(
         max_length=200,
         verbose_name="Nome",
-        help_text="Nome da medico",
+        help_text="Nome do médico",
     )
 
-    especialidades = models.ManyToManyField(EspecialidadeMedica)
+    especialidades = models.ManyToManyField(EspecialidadeMedica, verbose_name='Especialidades')
 
     telefone = models.CharField(
         max_length=11,
@@ -21,7 +22,7 @@ class Medico(models.Model):
     email = models.EmailField(
         max_length=100,
         verbose_name="Email",
-        help_text="Email da medico",
+        help_text="Email do médico",
         unique=True,
         blank=True,
     )
@@ -40,9 +41,9 @@ class Medico(models.Model):
 
     status = models.CharField(
         max_length=10,
-        choices=[("Ativo", "Ativo"), ("inativo", "inativo")],
+        choices=[("Ativo", "Ativo"), ("Inativo", "Inativo")],
         verbose_name="Status",
-        help_text="Status do medico",
+        help_text="Status do médico",
         default="Ativo",
     )
 
@@ -73,8 +74,6 @@ class Medico(models.Model):
 
         if not self.nome.replace(" ", "").isalpha():
             raise ValidationError("O nome não pode ter numeros")
-
-       
 
     def __str__(self):
         return self.nome
