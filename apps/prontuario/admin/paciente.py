@@ -9,3 +9,11 @@ class PacienteAdmin(admin.ModelAdmin):
     search_fields = ['nome', 'cpf', 'telefone_principal','telefone_segundario', 'nome_mae','nome_pai']
     list_filter = ['tipo_sanguineo', 'sexo']
     readonly_fields = ['criado_em', 'atualizado_em']
+    fieldsets = (
+        ('Paciente', {
+            'fields': ('nome', 'data_nascimento', 'sexo', 'cpf', 'rg', 'nome_mae', 'nome_pai', 'telefone_principal', 'telefone_segundario', 'email', 'tipo_sanguineo')
+        }),
+        ('Datas', {
+            'fields': ('criado_em', 'atualizado_em'), 'classes': ('collapse',)
+        }),
+    )
