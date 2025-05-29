@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from apps.prontuario.validators.valida_nome import valida_nome
+from apps.prontuario.utils.sanitiza_nome import sanitiza_nome
 
 
 class Paciente(models.Model):
@@ -8,6 +10,7 @@ class Paciente(models.Model):
         max_length=200,
         verbose_name="Nome",
         help_text="Nome do paciente",
+        validators=[valida_nome]
     )
 
     data_nascimento = models.DateField(
@@ -110,3 +113,7 @@ class Paciente(models.Model):
     class Meta:
         verbose_name = "Paciente"
         verbose_name_plural = "Pacientes"
+
+    def clean(self):
+        super().clean()
+        self.nome =  sanitiza_nome(self.nome)

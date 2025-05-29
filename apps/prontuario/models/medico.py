@@ -72,7 +72,10 @@ class Medico(models.Model):
         if len(self.nome) < 3:
             raise ValidationError("O nome precisa ser maior")
 
-        if not self.nome.replace(" ", "").isalpha():
+        # Validação mais flexível: permite letras, espaços e pontos (como em "Dr.")
+        # Remove espaços e pontos, depois verifica se contém apenas letras
+        nome_limpo = self.nome.replace(" ", "").replace(".", "")
+        if not nome_limpo.isalpha():
             raise ValidationError("O nome não pode ter numeros")
 
     def __str__(self):
